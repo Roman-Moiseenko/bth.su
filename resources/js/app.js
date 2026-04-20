@@ -12,16 +12,17 @@ const pinia = createPinia();
 createInertiaApp({
     title: title => import.meta.env.VITE_APP_NAME + ` - ${title}`,
     resolve: name => {
+        console.log(name)
         const pages = import.meta.glob('./Pages/**/*.vue', {eager: true})
         let page = pages[`./Pages/${name}.vue`]
-        if (name !== 'Admin/Auth/Login' && name !== 'Base/404') page.default.layout = page.default.layout || Layout
+        page.default.layout = page.default.layout || Layout
+//        if (name !== 'Admin/Auth/Login' && name !== 'Base/404') page.default.layout = page.default.layout || Layout
         return page
     },
     setup({el, App, props, plugin}) {
         const app = createApp({render: () => h(App, props)})
             .use(plugin)
             .use(pinia)
-            .use(DeleteEntityModal)
             .use(ZiggyVue);
         for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
             app.component(key, component)
