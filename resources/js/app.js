@@ -5,7 +5,8 @@ import { ZiggyVue } from 'ziggy-js'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'dayjs/locale/ru';
 import Layout from './Components/Layout.vue'
-
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
 
 const pinia = createPinia();
 
@@ -23,7 +24,8 @@ createInertiaApp({
         const app = createApp({render: () => h(App, props)})
             .use(plugin)
             .use(pinia)
-            .use(ZiggyVue);
+            .use(ZiggyVue)
+            .use(ElementPlus);
         for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
             app.component(key, component)
         }

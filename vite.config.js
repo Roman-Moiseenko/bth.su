@@ -22,6 +22,8 @@ export default defineConfig({
         },
         watch: {
             ignored: ['**/storage/framework/views/**'],
+          //  usePolling: true,
+          //  interval: 1000,
         },
     },
 });
