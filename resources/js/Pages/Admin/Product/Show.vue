@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import {defineProps} from "vue";
-import {Head, Link, router} from "@inertiajs/vue3";
-import {useAuthStore} from "../Stores/auth";
+import {Head, router} from "@inertiajs/vue3";
+import {useAuthStore} from "../../../Stores/auth";
+const auth = useAuthStore()
 
 const props = defineProps({
     product: Object,
@@ -12,8 +13,15 @@ const props = defineProps({
 })
 
 function goBack() {
-    router.get(`/`)
+    router.get(`/admin/products`, {}, auth.getHeader())
 }
+function handleEdit() {
+    router.get(`/admin/products/${props.product.id}/edit`, {}, auth.getHeader())
+}
+function handleDelete() {
+    console.log('DEL')
+}
+
 </script>
 
 <template>
@@ -38,6 +46,14 @@ function goBack() {
 
 
         </el-descriptions>
+        <template #footer>
+            <el-button type="success" plain @click="handleEdit">
+                Edit
+            </el-button>
+            <el-button type="danger"  :plain="!product.trashed" @click="handleDelete">
+                Del
+            </el-button>
+        </template>
     </el-card>
 </template>
 

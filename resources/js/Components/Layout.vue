@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import { usePage } from '@inertiajs/vue3'
+import {usePage, router, Link} from '@inertiajs/vue3'
 import {type LoginForm, useAuthStore} from "../Stores/auth";
 import {ref} from "vue";
 const auth = useAuthStore()
 const showLoginDialog = ref(false)
 const form = ref<LoginForm>(auth.getInitLoginForm())
+
 function handleLogin() {
     form.value = auth.getInitLoginForm()
     showLoginDialog.value = true
@@ -16,18 +17,23 @@ function onLogin() {
         //ElMessage
     })
 }
+function onManage()
+{
+    router.get('/admin/products', {}, auth.getHeader())
+}
 </script>
 
 <template>
 
     <div class="container mx-auto">
         <div class="flex m-3 p-3">
-            <div class="font-medium text-green-600 text-lg">
-                API
+            <div class="font-bold text-green-700 text-lg">
+                <Link href="/" >API</Link>
             </div>
             <div class="ml-auto">
+                <el-button v-if="auth.logged" type="success" @click="onManage" class="shadow shadow-slate-400">Управление товарами</el-button>
                 <el-button v-if="auth.logged" type="danger" @click="auth.logout()" class="shadow shadow-slate-400">Logout</el-button>
-                <el-button v-else @click="handleLogin" class="shadow shadow-slate-400" type="primary">Login</el-button>
+                <el-button v-if="!auth.logged" @click="handleLogin" class="shadow shadow-slate-400" type="primary">Login</el-button>
             </div>
         </div>
         <slot/>

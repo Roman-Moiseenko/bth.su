@@ -63,11 +63,16 @@ export const useAuthStore = defineStore('auth', () => {
         return 'success'
     }
 
+    function getHeader() {
+        if (tokenCookie.value === null) return {}
+        return {headers: { Authorization: 'Bearer ' + tokenCookie.value} }
+    }
     return {
         login,
         token: tokenCookie,
         logged: loggedCookie,
         logout,
-        getInitLoginForm
+        getInitLoginForm,
+        getHeader
     }
 })
