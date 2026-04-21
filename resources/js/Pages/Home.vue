@@ -28,7 +28,6 @@ function handleCurrentChange(page) {
     pageData.reloadProducts(page, categoryId.value)
 }
 function filterCategory() {
-    console.log(categoryId.value)
     pageData.reloadProducts(1, categoryId.value)
 }
 function routeClick(row: Object) {

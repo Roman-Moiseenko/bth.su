@@ -5,6 +5,7 @@ import type {FormInstance} from "element-plus";
 import {FormProduct, useProduct} from "../../../Composables/useProduct";
 import {useCategoriesStore} from "../../../Stores/categories";
 import {useAuthStore} from "../../../Stores/auth";
+import {useMessage} from "../../../Composables/useMessage";
 
 const props = defineProps({
     product: Object,
@@ -14,6 +15,8 @@ const props = defineProps({
     }
 })
 const auth = useAuthStore()
+const msg = useMessage()
+
 const categories = useCategoriesStore()
 const product = useProduct()
 const form = ref<FormProduct>({
@@ -32,8 +35,14 @@ const submitForm = async (formEl: FormInstance | undefined) => {
             isSaving.value = true
             product.update(props.product.id, form.value).then(result => {
                 isSaving.value = false
-                if (result === "success") router.get(`/admin/products`, {}, auth.getHeader())
-//                router.get(`/admin/products/${props.product.id}`, {}, auth.getHeader())
+                if (result === "success") {
+                    router.get(`/admin/products`, {}, auth.getHeader())
+                    msg.success('Сохранено')
+                } else {
+                    msg.error('Ошибка сохранения')
+                }
+            }).catch(error => {
+                msg.error(error)
             })
         }
     })

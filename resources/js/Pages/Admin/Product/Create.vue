@@ -5,8 +5,10 @@ import {useAuthStore} from "../../../Stores/auth";
 import {useCategoriesStore} from "../../../Stores/categories";
 import {defineProps, ref} from "vue";
 import {Head, router} from "@inertiajs/vue3";
+import {useMessage} from "../../../Composables/useMessage";
 
 const auth = useAuthStore()
+const msg = useMessage()
 const categories = useCategoriesStore()
 const product = useProduct()
 const form = ref<FormProduct>(product.getInitialFormState())
@@ -25,8 +27,15 @@ const submitForm = async (formEl: FormInstance | undefined) => {
             isSaving.value = true
             product.create(form.value).then(id => {
                 isSaving.value = false
-                if (id !== null) router.get(`/admin/products`, {}, auth.getHeader())
-                    //router.get(`/admin/products/${id}`, {}, auth.getHeader())
+
+                if (id !== null) {
+                    router.get(`/admin/products`, {}, auth.getHeader())
+                    msg.success('Сохранено')
+                } else {
+                    msg.error('Ошибка сохранения')
+                }
+            }).catch(error => {
+                msg.error(error)
             })
         }
     })

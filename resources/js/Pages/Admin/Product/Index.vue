@@ -5,6 +5,7 @@ import {useAuthStore} from "../../../Stores/auth";
 import {useCategoriesStore} from "../../../Stores/categories";
 import {getProducts} from "../../../Composables/useProducts";
 import {useProduct} from "../../../Composables/useProduct";
+import {useMessage} from "../../../Composables/useMessage";
 const auth = useAuthStore()
 if (!auth.logged) {
     router.get(`/`)
@@ -23,7 +24,7 @@ const props = defineProps({
 })
 const categoryId = ref(null)
 const tableData = ref(pageData.products)
-
+const msg = useMessage()
 const CurrentPage = ref(1)
 const TotalPages = computed(() =>  pageData.pages.value)
 const loadedTable = computed(() => pageData.loaded.value)
@@ -59,6 +60,9 @@ function onDelete() {
     productUse.remove(productIdDelete.value).then(v => {
         showDelete.value = false
         pageData.reloadProducts(CurrentPage.value, categoryId.value)
+        msg.success('Удаление завершено')
+    }).catch(error => {
+        msg.error(error)
     })
 }
 </script>

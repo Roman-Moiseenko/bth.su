@@ -48,7 +48,12 @@ export function useProduct() {
             }
             return response.json();
         }).then(results => {
-            id.value = results
+            // @ts-ignore
+            if (Number.isInteger(results)) {
+                id.value = results
+            } else {
+                throw new Error('Товар не создан');
+            }
         });
         return id.value;
     }
