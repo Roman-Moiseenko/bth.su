@@ -27,9 +27,6 @@ function handleDelete() {
 <template>
     <Head><title>{{ title }} | {{ product.name }}</title></Head>
 
-    <div class="p-2">
-        <el-button @click="goBack" type="info" dark class="mt-5  shadow shadow-slate-400">К товарам</el-button>
-    </div>
     <el-card shadow="always" class="mt-5">
         <el-descriptions
             title="Карточка товара"

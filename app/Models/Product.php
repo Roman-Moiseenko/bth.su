@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $name
  * @property string $description
  * @property int $price
+ * @property int $category_id
  * @property Category $category
  */
 class Product extends Model

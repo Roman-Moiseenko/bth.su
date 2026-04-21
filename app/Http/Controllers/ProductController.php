@@ -22,7 +22,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $product = Product::create($request->validated());
-        return response()->json($this->repository->ProductToArray($product), 201);
+        return response()->json($product->id, 201);
     }
 
 

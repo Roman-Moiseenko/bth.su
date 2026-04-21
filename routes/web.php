@@ -12,11 +12,12 @@ Route::group([
     'prefix' => 'admin',
     'as' => 'admin.',
 ], function () {
-    Route::middleware(['auth:sanctum'])->group(function () {
+    //TODO Подключить проверку
+ //   Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('products', [AdminController::class, 'products']);
         Route::get('products/create', [AdminController::class, 'create']);
         Route::get('products/{product}', [AdminController::class, 'show']);
         Route::get('products/{product}/edit', [AdminController::class, 'edit']);
 
-    });
+//    });
 });
