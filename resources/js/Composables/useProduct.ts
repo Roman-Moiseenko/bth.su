@@ -73,11 +73,29 @@ export function useProduct() {
         });
         return "success"
     }
+    async function remove(id: number) {
+        await fetch(`${url}/products/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${auth.token}`,
+                'Accept': 'application/json',
+            },
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error(`Ошибка HTTP: ${response.status}`);
+            }
+            return response.json();
+        }).then(results => {
+
+        });
+        return "success"
+    }
     return {
         getInitialFormState,
         rulesForm,
         create,
-        update
+        update,
+        remove,
     }
 }
 

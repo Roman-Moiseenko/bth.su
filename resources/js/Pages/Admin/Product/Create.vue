@@ -25,7 +25,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
             isSaving.value = true
             product.create(form.value).then(id => {
                 isSaving.value = false
-                if (id !== null) router.get(`/admin/products/${id}`, {}, auth.getHeader())
+                if (id !== null) router.get(`/admin/products`, {}, auth.getHeader())
+                    //router.get(`/admin/products/${id}`, {}, auth.getHeader())
             })
         }
     })

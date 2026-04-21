@@ -16,7 +16,8 @@ class HomeController extends Controller
         ]);
     }
 
-    public function product(Product $product) {
+    public function product(int $id) {
+        $product = Product::withTrashed()->find($id);
         return Inertia::render('Product', [
            'product' => $product,
         ]);

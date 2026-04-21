@@ -24,20 +24,23 @@ class ProductController extends Controller
         return response()->json($product->id, 201);
     }
 
-
-    public function show(Product $product)
+    public function show(int $id)
     {
+        $product = Product::withTrashed()->find($id);
         return response()->json($this->repository->ProductToArray($product));
     }
 
-    public function update(ProductRequest $request, Product $product)
+    public function update(ProductRequest $request, int $id)
     {
+        $product = Product::withTrashed()->find($id);
         $product->update($request->validated());
         return response()->json(['ok' => true]);
     }
 
-    public function destroy(Product $product)
+    public function destroy(int $id)
     {
+        $product = Product::withTrashed()->find($id);
+
         if ($product->trashed()) {
             $product->forceDelete();
         } else {

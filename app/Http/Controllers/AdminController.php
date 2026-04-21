@@ -26,15 +26,17 @@ class AdminController extends Controller
             'ok' => true,
         ]);
     }
-    public function edit(Product $product)
+    public function edit(int $id)
     {
+        $product = Product::withTrashed()->find($id);
         return Inertia::render('Admin/Product/Edit', [
             'product' => $this->repository->ProductToArray($product),
         ]);
     }
 
-    public function show(Product $product)
+    public function show(int $id)
     {
+        $product = Product::withTrashed()->find($id);
         return Inertia::render('Admin/Product/Show', [
             'product' => $this->repository->ProductToArray($product),
         ]);

@@ -32,7 +32,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
             isSaving.value = true
             product.update(props.product.id, form.value).then(result => {
                 isSaving.value = false
-                if (result === "success") router.get(`/admin/products/${props.product.id}`, {}, auth.getHeader())
+                if (result === "success") router.get(`/admin/products`, {}, auth.getHeader())
+//                router.get(`/admin/products/${props.product.id}`, {}, auth.getHeader())
             })
         }
     })

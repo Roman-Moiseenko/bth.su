@@ -4,11 +4,13 @@ import {computed, defineProps, ref} from "vue";
 import {useAuthStore} from "../../../Stores/auth";
 import {useCategoriesStore} from "../../../Stores/categories";
 import {getProducts} from "../../../Composables/useProducts";
+import {useProduct} from "../../../Composables/useProduct";
 const auth = useAuthStore()
 if (!auth.logged) {
     router.get(`/`)
 }
 const categories = useCategoriesStore()
+
 let pageData = getProducts(1, null)
 const list = computed(() => categories.list)
 
@@ -41,11 +43,23 @@ function routeClick(row: Object) {
 function handleEdit(row: Object) {
     router.get(`/admin/products/${row.id}/edit`, {}, auth.getHeader())
 }
-function handleDelete(row: Object) {
-    console.log(row.id)
-}
+
 function handleCreate() {
     router.get(`/admin/products/create`, {}, auth.getHeader())
+}
+
+const showDelete = ref(false)
+const productIdDelete = ref(null)
+function handleDelete(row: Object) {
+    productIdDelete.value = row.id
+    showDelete.value = true
+}
+function onDelete() {
+    const productUse = useProduct()
+    productUse.remove(productIdDelete.value).then(v => {
+        showDelete.value = false
+        pageData.reloadProducts(CurrentPage.value, categoryId.value)
+    })
 }
 </script>
 
@@ -71,6 +85,11 @@ function handleCreate() {
         style="width: 100%; cursor: pointer"
         @row-click="routeClick"
     >
+        <el-table-column prop="trashed" label="Уд" width="60">
+            <template #default="scope">
+                {{ scope.row.trashed ? '*' : '' }}
+            </template>
+        </el-table-column>
         <el-table-column prop="name" label="Товар" width="120"/>
         <el-table-column prop="price" label="Цена" width="120"/>
         <el-table-column prop="category" label="Категория" width="120"/>
@@ -90,6 +109,23 @@ function handleCreate() {
     <div class="mt-3">
         <el-pagination background  layout="prev, pager, next" :page-size="10" :total="TotalPages" @current-change="handleCurrentChange" />
     </div>
+
+
+    <el-dialog v-model="showDelete" title="Удаление" width="400">
+
+        <template #header>
+            Удаление товара
+        </template>
+
+        <template #default>
+            Вы уверены, что хотите удалить товар?
+        </template>
+
+        <template #footer>
+            <el-button type="info" plain @click="showDelete = false">Отмена</el-button>
+            <el-button type="danger" plain @click="onDelete">Удалить</el-button>
+        </template>
+    </el-dialog>
 </template>
 
 <style scoped>
