@@ -8,7 +8,7 @@ const auth = useAuthStore()
 
 const categories = useCategoriesStore()
 let pageData = getProducts(1, null)
-
+const list = computed(() => categories.list)
 
 const props = defineProps({
     home: Boolean,
@@ -37,10 +37,11 @@ function filterCategory() {
 
 <template>
     <Head><title>{{ title }}</title></Head>
-    <h1>Товары</h1>
-    <div>
+    <div class="flex">
+        <h1 class="font-medium text-xl">Товары</h1>
+
         <el-select v-model="categoryId" clearable @change="filterCategory">
-            <el-option v-for="category in categories.list" :label="category.name" :key="category.id" :value="category.id"/>
+            <el-option v-for="category in list" :label="category.name" :key="category.id" :value="category.id"/>
         </el-select>
     </div>
     <el-table

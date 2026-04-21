@@ -26,7 +26,11 @@ export function getProducts(page: number, category_id: any) {
         let params = new URLSearchParams({
             page: page.toString()
         })
-        if (category_id !== null && category_id != undefined) params['category_id'] = category_id.toString()
+
+        if (category_id !== null && category_id != undefined) params.append ('category_id',category_id.toString())
+            //params['category_id'] = category_id.toString()
+        console.log(params)
+        console.log(params.toString())
         fetch(`${url}/products?${params.toString()}`, {
             method: 'GET',
             headers: {
