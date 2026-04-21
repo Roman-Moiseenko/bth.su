@@ -19,11 +19,21 @@ function onLogin() {
 </script>
 
 <template>
-    <div>
-        <el-button v-if="auth.logged" type="danger" @click="auth.logout()">Logout</el-button>
-        <el-button v-else @click="handleLogin">Login</el-button>
+
+    <div class="container mx-auto">
+        <div class="flex m-3 p-3">
+            <div class="font-medium text-green-600 text-lg">
+                API
+            </div>
+            <div class="ml-auto">
+                <el-button v-if="auth.logged" type="danger" @click="auth.logout()" class="shadow shadow-slate-400">Logout</el-button>
+                <el-button v-else @click="handleLogin" class="shadow shadow-slate-400" type="primary">Login</el-button>
+            </div>
+        </div>
+        <slot/>
+
     </div>
-    <slot/>
+
 
 
     <el-dialog v-model="showLoginDialog" title="Login" width="400" :modal="true">

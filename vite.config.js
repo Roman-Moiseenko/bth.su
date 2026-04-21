@@ -39,4 +39,10 @@ export default defineConfig({
           //  interval: 1000,
         },
     },
+    optimizeDeps: {
+        include: [
+            'element-plus',
+            // другие библиотеки
+        ],
+    },
 });

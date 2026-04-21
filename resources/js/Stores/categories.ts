@@ -18,12 +18,9 @@ export const useCategoriesStore = defineStore('categories', () => {
         }
         return response.json();
     }).then(results => {
-        console.log(results)
         list.value = [...results]
         loaded.value = false
     });
-
-
 
     return {
         list,

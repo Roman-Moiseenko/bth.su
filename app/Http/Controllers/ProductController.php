@@ -25,6 +25,7 @@ class ProductController extends Controller
         return response()->json($this->repository->ProductToArray($product), 201);
     }
 
+
     public function show(Product $product)
     {
         return response()->json($this->repository->ProductToArray($product));

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {computed, defineProps, ref, watch} from 'vue'
-import {Head} from "@inertiajs/vue3";
+import {Head, router} from "@inertiajs/vue3";
 import {useAuthStore} from "../Stores/auth";
 import {useCategoriesStore} from "../Stores/categories";
 import {getProducts, Product} from "../Composables/useProducts";
@@ -33,6 +33,9 @@ function filterCategory() {
     console.log(categoryId.value)
     pageData.reloadProducts(1, categoryId.value)
 }
+function routeClick(row: Object) {
+    router.get(`/product/${row.id}`)
+}
 </script>
 
 <template>
@@ -40,14 +43,18 @@ function filterCategory() {
     <div class="flex">
         <h1 class="font-medium text-xl">Товары</h1>
 
-        <el-select v-model="categoryId" clearable @change="filterCategory">
-            <el-option v-for="category in list" :label="category.name" :key="category.id" :value="category.id"/>
-        </el-select>
+        <div class="ml-auto" style="width: 250px;">
+            <el-select v-model="categoryId" clearable @change="filterCategory">
+                <el-option v-for="category in list" :label="category.name" :key="category.id" :value="category.id"/>
+            </el-select>
+        </div>
     </div>
     <el-table
         :data="tableData"
         row-key="id"
         v-loading="loadedTable"
+        style="width: 100%; cursor: pointer"
+        @row-click="routeClick"
     >
         <el-table-column prop="name" label="Товар" width="120"/>
         <el-table-column prop="price" label="Цена" width="120"/>
