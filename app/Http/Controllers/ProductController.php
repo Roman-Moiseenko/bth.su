@@ -12,7 +12,6 @@ class ProductController extends Controller
     public function __construct(private readonly ProductRepository $repository){}
     public function index(Request $request)
     {
-        \Log::info(json_encode($request->all()));
         $page = $request->input('page', 1);
         $category_id = $request->input('category_id');
         $productData = $this->repository->getAllProducts($page, $category_id);

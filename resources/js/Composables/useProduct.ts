@@ -55,7 +55,6 @@ export function useProduct() {
 
 
     async function update(id: number, data: FormProduct) {
-
         await fetch(`${url}/products/${id}`, {
             method: 'PUT',
             headers: {

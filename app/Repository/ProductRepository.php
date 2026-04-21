@@ -29,6 +29,7 @@ class ProductRepository
             'description' => $product->description,
             'category' => $product->category->name,
             'trashed' => $product->trashed(),
+            'category_id' => $product->category_id,
         ];
     }
 }

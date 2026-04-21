@@ -6,9 +6,9 @@ use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 Route::group([], function () {
     Route::middleware(['auth:sanctum'])->group(function () {
-        Route::delete('products/{id}', [ProductController::class, 'destroy']);
+        Route::delete('products/{product}', [ProductController::class, 'destroy']);
         Route::post('products', [ProductController::class, 'store']);
-        Route::put('products/{id}', [ProductController::class, 'update']);
+        Route::put('products/{product}', [ProductController::class, 'update']);
         Route::post('logout', [LoginController::class, 'logout']);
 
     });

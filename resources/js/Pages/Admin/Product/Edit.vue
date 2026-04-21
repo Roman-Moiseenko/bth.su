@@ -22,6 +22,7 @@ const form = ref<FormProduct>({
     price: props.product.price,
     category_id: props.product.category_id,
 })
+
 const formRef = ref<FormInstance>()
 const isSaving = ref(false)
 const submitForm = async (formEl: FormInstance | undefined) => {
@@ -69,7 +70,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
         </el-form>
         <template #footer=>
             <el-button type="info" plain @click="resetForm(formRef)">Отмена</el-button>
-            <el-button type="primary" @click="submitForm(formRef)">Добавить</el-button>
+            <el-button type="primary" @click="submitForm(formRef)">Сохранить</el-button>
         </template>
     </el-card>
 </template>
