@@ -6,6 +6,7 @@ use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use App\Service\AuthService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,5 +22,13 @@ class LoginController
         $token = $this->authService->login($validate);
         if (!$token) return response()->json(false, Response::HTTP_UNAUTHORIZED);
         return response()->json(['token' => $token]);
+    }
+
+    public function logout(Request $request)
+    {
+        $this->authService->logout($request);
+        return response()->json([
+            'ok' => true,
+        ]);
     }
 }
