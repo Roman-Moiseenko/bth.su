@@ -13,7 +13,8 @@ export type LoginForm = {
 }
 export const useAuthStore = defineStore('auth', () => {
 
-    const url = 'http://localhost:8888/api'
+    // @ts-ignore
+    const url = import.meta.env.VITE_API_BASE_URL
     const tokenCookie = ref(useCookies().cookies.get('token'));
 
     const loggedCookie= computed(() => {
@@ -26,7 +27,6 @@ export const useAuthStore = defineStore('auth', () => {
         remember: false
     })
 
-    console.log(tokenCookie.value)
     async function login(data: LoginForm) {
 
         const response = await fetch(`${url}/login`, {

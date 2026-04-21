@@ -3,9 +3,6 @@ import { usePage } from '@inertiajs/vue3'
 import {type LoginForm, useAuthStore} from "../Stores/auth";
 import {ref} from "vue";
 const auth = useAuthStore()
-
-console.log('auth.logged', auth.logged)
-
 const showLoginDialog = ref(false)
 const form = ref<LoginForm>(auth.getInitLoginForm())
 function handleLogin() {
@@ -14,7 +11,6 @@ function handleLogin() {
 }
 function onLogin() {
     auth.login(form.value).then(v => {
-        console.log(v)
         showLoginDialog.value = false
     }).catch(reason => {
         //ElMessage
@@ -24,7 +20,6 @@ function onLogin() {
 
 <template>
     <div>
-        Меню админа
         <el-button v-if="auth.logged" type="danger" @click="auth.logout()">Logout</el-button>
         <el-button v-else @click="handleLogin">Login</el-button>
     </div>

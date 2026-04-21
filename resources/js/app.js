@@ -13,7 +13,6 @@ const pinia = createPinia();
 createInertiaApp({
     title: title => import.meta.env.VITE_APP_NAME + ` - ${title}`,
     resolve: name => {
-        console.log(name)
         const pages = import.meta.glob('./Pages/**/*.vue', {eager: true})
         let page = pages[`./Pages/${name}.vue`]
         page.default.layout = page.default.layout || Layout

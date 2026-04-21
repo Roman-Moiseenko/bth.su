@@ -4,35 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use App\Repository\CategoryRepository;
+
 
 class CategoryController extends Controller
 {
+    public function __construct(private readonly CategoryRepository $repository)
+    {
+    }
+
     public function index()
     {
-        return Category::all();
+        return response()->json($this->repository->getAll());
     }
 
-    public function store(CategoryRequest $request)
-    {
-        return Category::create($request->validated());
-    }
-
-    public function show(Category $category)
-    {
-        return $category;
-    }
-
-    public function update(CategoryRequest $request, Category $category)
-    {
-        $category->update($request->validated());
-
-        return $category;
-    }
-
-    public function destroy(Category $category)
-    {
-        $category->delete();
-
-        return response()->json();
-    }
 }

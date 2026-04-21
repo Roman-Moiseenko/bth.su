@@ -11,10 +11,14 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-        //TODO Фильтр по пагинации и категории
-
         return Inertia::render('Home', [
-            'products' => Product::all(), //для теста
+            'home' => true,
+        ]);
+    }
+
+    public function product(Product $product) {
+        return Inertia::render('Product', [
+           'product' => $product,
         ]);
     }
 }
